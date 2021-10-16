@@ -80,6 +80,11 @@ export class Obs {
     return result.img;
   }
 
+  async openProjector(monitor: number) {
+    await this.checkConnection();
+    await this.obs.send("OpenProjector", { type: "Preview", monitor: monitor });
+  }
+
   async checkConnection() {
     if (!this.connnected) {
       if (!this.connecting) {
@@ -107,5 +112,7 @@ export class Obs {
 
 export const obss = [
   new Obs("localhost:4444", "main-projector"),
-  new Obs("localhost:4444", "zoom"),
+  new Obs("localhost:4445", "zoom"),
+  new Obs("localhost:4446", "tv"),
+  new Obs("localhost:4447", "streaming"),
 ];

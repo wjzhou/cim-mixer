@@ -3,8 +3,9 @@
   "packageManager": "yarn@3.0.2",
   "scripts": {
     "watch": "tsc -w",
+    "build": "tsc",
     "start": "nodemon --inspect dist/server.js",
-    "start-prod": "node --trace-warnings dist/server.js"
+    "start-prod": "PORT=80 node --trace-warnings dist/server.js"
   },
   "dependencies": {
     "express": "^4.17.1",

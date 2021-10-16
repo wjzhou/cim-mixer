@@ -9,5 +9,15 @@
   "workspaces": [
     "workspaces/*"
   ],
-  "packageManager": "yarn@3.0.2"
+  "scripts": {
+    "build:client": "cd workspaces/client && npm run build",
+    "build:server": "cd workspaces/server && npm run build",
+    "copy": "copyfiles -u 2 \"workspaces/client/build/**/*\" workspaces/server/dist",
+    "build": "npm-run-all --parallel build:client build:server --sequential copy"
+  },
+  "packageManager": "yarn@3.0.2",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "npm-run-all": "^4.1.5"
+  }
 }
