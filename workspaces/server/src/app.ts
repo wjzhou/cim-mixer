@@ -4,12 +4,15 @@ import { Obs, obss } from "./obs";
 import asyncHandler from "express-async-handler";
 import createError from "http-errors";
 import { getCombinedNodeFlags } from "typescript";
+import { RespondGetInstances, RespondGetScenes } from "./types";
+import path from "path";
 
 const app: express.Application = express();
 
 app.set("port", process.env.PORT || 3001);
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/", (req: Request, res: Response) => {
   return res.send("Hello World");
@@ -33,7 +36,7 @@ function getObs(indexStr: string): Obs {
 }
 
 app.get("/getInstances", async (req, res) => {
-  const data = obss.map((obs) => obs.name);
+  const data: RespondGetInstances = obss.map((obs) => obs.name);
   res.json(data);
 });
 
@@ -41,8 +44,18 @@ app.get(
   "/getScenes/:index",
   ah(async (req, res) => {
     const obs = getObs(req.params.index);
-    const data: GetScenesRespond = await obs.getScenes();
+    const data: RespondGetScenes = await obs.getScenes();
     res.json(data);
+  })
+);
+
+app.post(
+  "/setScene/:index/:scene",
+  ah(async (req, res) => {
+    const obs = getObs(req.params.index);
+    const scene = req.params.scene;
+    await obs.setScrene(scene);
+    res.json("ok");
   })
 );
 
@@ -51,7 +64,7 @@ app.get(
   ah(async (req, res) => {
     const obs = getObs(req.params.index);
     const scene = req.params.scene || obs.currentScene;
-    const width = Number(req.query.width) || 1920;
+    const width = Number(req.query.width) || 480;
 
     const data: string = await obs.getScreenshot(scene, width);
 
@@ -59,6 +72,17 @@ app.get(
       "Content-Type": "text/plain",
     });
     res.end(Buffer.from(data, "binary"));
+  })
+);
+
+app.post(
+  "/openProjector",
+  ah(async (req, res) => {
+    const mainObs = obss[0];
+    await mainObs.openProjector(0);
+    const tvObs = obss[2];
+    //await tvObs.oprnProjector(0);
+    res.json("ok");
   })
 );
 
