@@ -1,4 +1,5 @@
 {
+  "private": true,
   "dependencies": {
     "eslint": "^8.0.1",
     "prettier": "^2.4.1",
