@@ -10,8 +10,8 @@
     "workspaces/*"
   ],
   "scripts": {
-    "build:client": "cd workspaces/client && npm run build",
-    "build:server": "cd workspaces/server && npm run build",
+    "build:client": "yarn workspace client build",
+    "build:server": "yarn workspace server build",
     "copy": "copyfiles -u 2 \"workspaces/client/build/**/*\" workspaces/server/dist",
     "build": "npm-run-all --parallel build:client build:server --sequential copy"
   },
