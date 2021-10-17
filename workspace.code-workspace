@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "workspaces\\client"
+		},
+		{
+			"path": "workspaces\\server"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": ".yarn/sdks/typescript/lib",
+		"typescript.enablePromptUseWorkspaceTsdk": true
+	}
+}
