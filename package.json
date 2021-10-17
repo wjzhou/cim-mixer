@@ -4,15 +4,18 @@
     "eslint": "^8.0.1",
     "prettier": "^2.4.1",
     "react-scripts": "^4.0.3",
+    "rimraf": "^3.0.2",
     "typescript": "^4.4.4"
   },
   "workspaces": [
     "workspaces/*"
   ],
   "scripts": {
+    "clean": "rimraf workspaces/client/build workspaces/server/dist",
     "build:client": "yarn workspace client build",
     "build:server": "yarn workspace server build",
     "copy": "copyfiles -u 2 \"workspaces/client/build/**/*\" workspaces/server/dist",
+    "start": "yarn workspace server start-prod",
     "build": "npm-run-all --parallel build:client build:server --sequential copy",
     "vscode": "yarn dlx @yarnpkg/sdks vscode"
   },

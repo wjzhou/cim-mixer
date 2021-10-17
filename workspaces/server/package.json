@@ -2,9 +2,9 @@
   "name": "server",
   "packageManager": "yarn@3.0.2",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --outDir build",
     "build": "tsc",
-    "start": "nodemon --inspect dist/server.js",
+    "start": "nodemon --inspect build/server.js",
     "start-prod": "PORT=80 node --trace-warnings dist/server.js"
   },
   "dependencies": {
