@@ -8,6 +8,7 @@
     "start-prod": "PORT=4000 node --trace-warnings dist/server.js"
   },
   "dependencies": {
+    "@types/ws": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
     "http-errors": "^1.8.0",
