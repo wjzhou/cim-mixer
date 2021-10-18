@@ -21,7 +21,10 @@ export const logger = winston.createLogger({
 if (process.env.NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.simple(),
+      format: winston.format.combine(
+        winston.format.splat(),
+        winston.format.simple()
+      ),
     })
   );
 }
