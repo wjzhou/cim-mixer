@@ -1,0 +1,21 @@
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+
+providers:
+  file:
+    filename: ./dynamic.yaml
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: "wzhou.xyz@gmail.com"
+      storage: "acme.json"
+      tlsChallenge:
+      httpChallenge:
+        entryPoint: http
+
+api:
+  insecure: true

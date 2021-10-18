@@ -6,3 +6,5 @@
 !.yarn/sdks
 !.yarn/versions
 *.log
+reverse-proxy/acme.json
+reverse-proxy/traefik.exe

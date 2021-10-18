@@ -1,0 +1,39 @@
+http:
+  routers:
+    api:
+      rule: "Host(`127.0.0.1`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      service: api@internal
+    to-cim-mixer:
+      rule: "Host(`cim-mixer.wzhou.net`)"
+      tls:
+        certResolver: myresolver
+       # If the rule matches, ap plies the middleware
+      middlewares:
+      - worship-user
+      service: cim-mixer
+      
+      service: cim-mixer
+    to-cim-mixer-internal:
+      rule: "Host(`cim-mixer.wzhou.net`)"
+      middlewares:
+      - local-ipwhitelist
+      service: cim-mixer
+
+  middlewares:
+    worship-user:
+      basicAuth:
+        users:
+        - worship:$apr1$Bgu85rLA$FsE3ypcU35bU3KGBYkbUa0
+    local-ipwhitelist:
+      ipWhiteList:
+        sourceRange:
+        - "127.0.0.1/32"
+        - "192.168.0.0/16"
+        - "10.0.0.1/8"
+      
+  services:
+    # Define how to reach an existing service on our infrastructure
+    cim-mixer:
+      loadBalancer:
+        servers:
+        - url: http://127.0.0.1:4000
