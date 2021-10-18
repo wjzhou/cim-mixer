@@ -83,7 +83,6 @@ export class Obs {
 
   async getScreenshot(scene: string, width: number) {
     const result = await this.send('TakeSourceScreenshot', {
-      sourceName: scene,
       width,
       embedPictureFormat: 'png',
     });
