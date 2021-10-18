@@ -13,7 +13,7 @@
 	"settings": {
 		"typescript.tsdk": ".yarn/sdks/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
-		"prettier.prettierPath": ".yarn/sdks/prettier",
+		"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
 		"eslint.nodePath": ".yarn/sdks",
 	}
 }
