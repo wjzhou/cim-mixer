@@ -1,30 +1,17 @@
 import WebSocket from 'ws';
 import EventEmitter from 'events';
 import { logger } from './logger';
-import ObsWebSocket from 'obs-websocket-js';
-import { idText } from 'typescript';
-import { ObsEvent } from './obs-types';
+import { ObsRequestEvent, ObsSendType, ObsUpdateEvent } from './obs-types';
 
-type SendType = InstanceType<typeof ObsWebSocket>['send'];
-type RequestEvent = {
-  'message-id': string;
-  status: 'ok' | 'error';
-  error?: string;
-};
 export class Obs {
   ws: WebSocket | null = null;
-  connnected = false;
   connecting = false;
-  connectEvent = new EventEmitter();
   currentScene = '';
   scenes: string[] = [];
 
-  /**
-   *
-   */
   constructor(public address: string, public name: string) {}
 
-  handleUpdateEvent(event: ObsEvent) {
+  handleUpdateEvent(event: ObsUpdateEvent) {
     switch (event['update-event']) {
       case 'ScenesChanged':
         this.scenes = event.scenes.map((a) => a.name);
@@ -49,16 +36,17 @@ export class Obs {
         resolve(ws);
       });
       ws.once('error', (error) => {
+        logger.warn('websocket error %s', error);
         this.connecting = false;
-
         reject(error);
+      });
+      ws.once('close', (code, reason) => {
+        logger.warn('websocket closed %d, %s', code, reason);
       });
       ws.onmessage = (event) => {
         const response = JSON.parse(event.data.toString()) as
-          | RequestEvent
-          | {
-              'update-type': string;
-            };
+          | ObsRequestEvent
+          | ObsUpdateEvent;
         if ('message-id' in response) {
           const key = Number(response['message-id']);
           const callback = this.listeners.get(key);
@@ -66,7 +54,7 @@ export class Obs {
             callback(response);
           }
           this.listeners.delete(key);
-        } else if ('update-event' in response) {
+        } else if ('update-type' in response) {
           this.handleUpdateEvent(response);
         } else {
           logger.info('Unknown event:', response);
@@ -113,18 +101,20 @@ export class Obs {
     return await this.connect();
   }
 
-  listeners = new Map<number, (event: RequestEvent) => void>();
+  listeners = new Map<number, (event: ObsRequestEvent) => void>();
   msgId = 1;
-  send: SendType = async (requestType, args?) => {
+  send: ObsSendType = async (requestType, args) => {
     const ws = await this.getConnection();
     return new Promise((resolve, reject) => {
       const msgId = this.msgId++;
       const data = {
         'request-type': requestType,
-        'message-id': msgId,
+        'message-id': msgId.toString(),
         ...args,
       };
-      ws.send(JSON.stringify(data));
+      const jsonData = JSON.stringify(data);
+      console.debug('Obs Websocket send: %O', data);
+      ws.send(jsonData);
       this.listeners.set(msgId, (event) => {
         if (event.status === 'error') {
           reject(event.error);
@@ -138,8 +128,8 @@ export class Obs {
 }
 
 export const obss = [
-  new Obs('localhost:4444', 'main-projector'),
-  new Obs('localhost:4445', 'zoom'),
-  new Obs('localhost:4446', 'tv'),
-  new Obs('localhost:4447', 'streaming'),
+  new Obs('ws://localhost:4444', 'main-projector'),
+  new Obs('ws://localhost:4445', 'zoom'),
+  new Obs('ws://localhost:4446', 'podium-tv'),
+  new Obs('ws://localhost:4447', 'streaming'),
 ];

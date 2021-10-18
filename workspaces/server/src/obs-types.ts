@@ -1417,17 +1417,21 @@ interface EventHandlersDataMap {
   StudioModeSwitched: { 'new-state': boolean };
 }
 
-export type ObsSendType<K extends keyof RequestMethodsArgsMap> = (
+export type ObsSendType = <K extends keyof RequestMethodsArgsMap>(
   requestType: K,
-  ...args: RequestMethodsArgsMap[K] extends object
-    ? [RequestMethodsArgsMap[K]]
-    : [undefined?]
+  args?: RequestMethodsArgsMap[K]
 ) => Promise<RequestMethodReturnMap[K]>;
 
 type ObsEventGeneric<K extends keyof EventHandlersDataMap> = {
   'update-event': K;
 } & EventHandlersDataMap[K];
 
-export type ObsEvent =
+export type ObsRequestEvent = {
+  'message-id': string;
+  status: 'ok' | 'error';
+  error?: string;
+};
+
+export type ObsUpdateEvent =
   | ObsEventGeneric<'SwitchScenes'>
   | ObsEventGeneric<'ScenesChanged'>;
