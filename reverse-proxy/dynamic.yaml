@@ -3,20 +3,21 @@ http:
     api:
       rule: "Host(`127.0.0.1`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       service: api@internal
+    to-cim-mixer-internal:
+      entryPoints:
+      - "http"
+      #rule: "Host(`cim-mixer.local`)"
+      rule: "Host(`192.168.1.200`)"
+      service: cim-mixer
     to-cim-mixer:
-      rule: "Host(`cim-mixer.wzhou.net`)"
+      rule: "Host(`cim-mixer.churchinmarlboro.org`)"
+      entryPoints:
+      - "https"
       tls:
         certResolver: myresolver
        # If the rule matches, ap plies the middleware
       middlewares:
       - worship-user
-      service: cim-mixer
-      
-      service: cim-mixer
-    to-cim-mixer-internal:
-      rule: "Host(`cim-mixer.wzhou.net`)"
-      middlewares:
-      - local-ipwhitelist
       service: cim-mixer
 
   middlewares:

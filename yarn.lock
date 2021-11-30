@@ -14105,6 +14105,7 @@ resolve@^2.0.0-next.3:
     express: ^4.17.1
     express-async-handler: ^1.2.0
     http-errors: ^1.8.0
+    systeminformation: ^5.9.15
     tsc-watch: ^4.5.0
     typescript: ^4.4.4
     winston: ^3.3.3
@@ -15006,6 +15007,15 @@ resolve@^2.0.0-next.3:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 6e8fc7e1486b8b54bea91199d9535bb72f10842e40c79e882fc94fb7b14b89866adf2fd79efa5ebb5b658bc07fb459ccce5ac0e99ef3d72f474e74aaf284029d
+  languageName: node
+  linkType: hard
+
+"systeminformation@npm:^5.9.15":
+  version: 5.9.15
+  resolution: "systeminformation@npm:5.9.15"
+  bin:
+    systeminformation: lib/cli.js
+  checksum: e44b6a6b60991a34f9187aa68dd0972523bb1981ac5f5f6b44c7ef41e79470062f28de5aad747bbd35e8775e0560e737a125b704d71238632429c3bcf2be68f8
   languageName: node
   linkType: hard
 
