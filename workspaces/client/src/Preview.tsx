@@ -22,7 +22,7 @@ export default function Preview(props: {
         {instances.map((a) => (
           <Box>
             <div>{a.name}</div>
-            <PreviewOne index={0} width={imgWidth} scene="" />
+            <PreviewOne index={a.index} width={imgWidth} scene="" />
           </Box>
         ))}
       </Box>
