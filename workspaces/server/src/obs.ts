@@ -78,7 +78,15 @@ export class Obs {
   }
 
   async setScrene(scene: string) {
-    this.send('SetCurrentScene', { 'scene-name': scene });
+    const scenes = await this.send('GetSceneList');
+    let targetScene = 'Projector';
+    for ( let s of scenes.scenes){
+      if (s.name === scene){
+        targetScene = scene
+        break;
+      }
+    }
+    this.send('SetCurrentScene', { 'scene-name': targetScene });
   }
 
   async getScreenshot(scene: string, width: number) {
