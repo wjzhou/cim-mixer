@@ -12,7 +12,10 @@ const app: express.Application = express();
 app.set('port', process.env.PORT || 3001);
 
 app.use(express.json());
+
 app.use(express.static(path.join(__dirname, 'build')));
+
+app.use('/htmls', express.static(path.join(__dirname, '../htmls')));
 
 app.get('/', (req: Request, res: Response) => {
   return res.send('Hello World');
