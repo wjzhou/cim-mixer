@@ -5,9 +5,10 @@
     "watch": "tsc -w --outDir build",
     "build": "tsc",
     "start": "tsc-watch --outDir ./build --onSuccess \"node --inspect build/server.js\"",
-    "start-prod": "PORT=4000 node --trace-warnings dist/server.js"
+    "start-prod": "NODE_ENV=production PORT=4000 node --trace-warnings dist/server.js"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.11.0",
     "@types/ws": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",

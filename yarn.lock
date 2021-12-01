@@ -1691,6 +1691,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@date-io/core@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "@date-io/core@npm:2.11.0"
+  checksum: ad26af280b0fb08bf4a272fbd5d41fb9bdb5b5aa3fcc4930ea5ae92a691c6b1adad8d54aa4172cc164b260aa5ee7994d5d1fcee00609f2e12efda8556fa32ba2
+  languageName: node
+  linkType: hard
+
+"@date-io/date-fns@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "@date-io/date-fns@npm:2.11.0"
+  dependencies:
+    "@date-io/core": ^2.11.0
+  peerDependencies:
+    date-fns: ^2.0.0
+  peerDependenciesMeta:
+    date-fns:
+      optional: true
+  checksum: cdab6e3836c69b3d81a43afb6fe082feb29edd55923422f821c4bf7aa8dbdcee890fa5b7e85a133403196f942e0ca5eb14707413e768a0abb05d7a819dbbfd95
+  languageName: node
+  linkType: hard
+
 "@emotion/babel-plugin@npm:^11.3.0":
   version: 11.3.0
   resolution: "@emotion/babel-plugin@npm:11.3.0"
@@ -14098,6 +14119,7 @@ resolve@^2.0.0-next.3:
   version: 0.0.0-use.local
   resolution: "server@workspace:workspaces/server"
   dependencies:
+    "@date-io/date-fns": ^2.11.0
     "@types/express": ^4.17.13
     "@types/http-errors": ^1.8.1
     "@types/node": ^16.11.0
@@ -14105,7 +14127,6 @@ resolve@^2.0.0-next.3:
     express: ^4.17.1
     express-async-handler: ^1.2.0
     http-errors: ^1.8.0
-    systeminformation: ^5.9.15
     tsc-watch: ^4.5.0
     typescript: ^4.4.4
     winston: ^3.3.3
@@ -15007,15 +15028,6 @@ resolve@^2.0.0-next.3:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 6e8fc7e1486b8b54bea91199d9535bb72f10842e40c79e882fc94fb7b14b89866adf2fd79efa5ebb5b658bc07fb459ccce5ac0e99ef3d72f474e74aaf284029d
-  languageName: node
-  linkType: hard
-
-"systeminformation@npm:^5.9.15":
-  version: 5.9.15
-  resolution: "systeminformation@npm:5.9.15"
-  bin:
-    systeminformation: lib/cli.js
-  checksum: e44b6a6b60991a34f9187aa68dd0972523bb1981ac5f5f6b44c7ef41e79470062f28de5aad747bbd35e8775e0560e737a125b704d71238632429c3bcf2be68f8
   languageName: node
   linkType: hard
 
